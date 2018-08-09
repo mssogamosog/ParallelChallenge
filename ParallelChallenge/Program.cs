@@ -10,6 +10,10 @@ namespace ParallelChallenge
 	{
 		static void Main(string[] args)
 		{
+			ParallelImplementation p = new ParallelImplementation();
+			Console.WriteLine("Write Word to be procesed");
+			string word = Console.ReadLine();
+			p.ReturnWord(word);
 		}
 	}
 }
