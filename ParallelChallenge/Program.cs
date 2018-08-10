@@ -24,19 +24,19 @@ namespace ParallelChallenge
 			Console.WriteLine("Write Word to be procesed");
 			//string word = Console.ReadLine();
 			var watch = System.Diagnostics.Stopwatch.StartNew();
-			//p.ReturnWord(word);
+			p.ReturnWord(word);
 			Console.WriteLine("Sequential Run");
 			watch.Stop();
 			Console.WriteLine(watch.ElapsedMilliseconds);
 
 			var watch2 = System.Diagnostics.Stopwatch.StartNew();
-			//p.ReturnWordParallelWithConcurrentQueue(word);
+			p.ReturnWordParallelWithConcurrentQueue(word);
 			Console.WriteLine("Parallel For With Concurrent Queue");
 			watch2.Stop();
 			Console.WriteLine(watch2.ElapsedMilliseconds);
 
 			var watch3 = System.Diagnostics.Stopwatch.StartNew();
-			//p.ReturnWordParallelWithList(word);
+			p.ReturnWordParallelWithList(word);
 			Console.WriteLine("Parallel For with List");
 			watch3.Stop();
 			Console.WriteLine(watch3.ElapsedMilliseconds);

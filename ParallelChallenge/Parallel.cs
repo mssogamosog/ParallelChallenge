@@ -49,16 +49,7 @@ namespace ParallelChallenge
 			{
 				Parallel.ForEach(wordSplited, character =>
 				{
-					string error = character;
-					if (Words.TryGetValue(character.ToUpper(), out string value))
-					{
-						//Console.WriteLine(character + " as " + value);
-						Thread.Sleep(25);
-					}
-					else
-					{
-						//Console.WriteLine(@"{0} is not a valid character", error.ToString());
-					}
+					GetValue(character);
 
 				});
 			}
@@ -76,17 +67,7 @@ namespace ParallelChallenge
 			{
 				Parallel.ForEach(wordSplited, character =>
 				{
-					string error = character;
-					if (Words.TryGetValue(character.ToUpper(), out string value))
-					{
-						//Console.WriteLine(character + " as " + value);
-						Thread.Sleep(25);
-					}
-					else
-					{
-						//Console.WriteLine(@"{0} is not a valid character", error.ToString());
-					}
-
+					GetValue(character);
 				});
 			}
 			else
@@ -103,16 +84,7 @@ namespace ParallelChallenge
 			{
 				foreach (var character in wordSplited)
 				{
-					string error = character;
-					if (Words.TryGetValue(character.ToUpper(), out string value))
-					{
-						//Console.WriteLine(character + " as " + value);
-						Thread.Sleep(25);
-					}
-					else
-					{
-						//Console.WriteLine(@"{0} is not a valid character", error.ToString());
-					}
+					GetValue(character);
 				}		
 			}
 			else
@@ -136,16 +108,7 @@ namespace ParallelChallenge
 						while (e.MoveNext())
 						{
 							string character = e.Current;
-							string error = character;
-							if (Words.TryGetValue(character.ToUpper(), out string value))
-							{
-								//Console.WriteLine(character + " as " + value);
-								Thread.Sleep(25);
-							}
-							else
-							{
-								//Console.WriteLine(@"{0} is not a valid character", error.ToString());
-							}
+							GetValue(character);
 						}
 					});
 				}
@@ -179,15 +142,7 @@ namespace ParallelChallenge
 						while (wordSplited.Count() > 0)
 						{
 							wordSplited.TryDequeue(out string character);
-							if (Words.TryGetValue(character.ToUpper(), out string value))
-							{
-								//Console.WriteLine(character + " as " + value);
-								Thread.Sleep(25);
-							}
-							else
-							{
-								//Console.WriteLine(@"{0} is not a valid character", error.ToString());
-							}
+							GetValue(character);
 						}
 					});
 				}
@@ -212,16 +167,7 @@ namespace ParallelChallenge
 			{
 				wordSplited.AsParallel().WithDegreeOfParallelism(20).ForAll( (character) =>
 				{
-					string error = character;
-					if (Words.TryGetValue(character.ToUpper(), out string value))
-					{
-						//Console.WriteLine(character + " as " + value);
-						Thread.Sleep(25);
-					}
-					else
-					{
-						//Console.WriteLine(@"{0} is not a valid character", error.ToString());
-					}
+					GetValue(character);
 				}
 				);
 			}
@@ -240,16 +186,7 @@ namespace ParallelChallenge
 				wordSplited.AsParallel().WithDegreeOfParallelism(20).ForAll((character) =>
 				{
 					wordSplited.TryDequeue(out character);
-					string error = character;
-					if (Words.TryGetValue(character.ToUpper(), out string value))
-					{
-						Console.WriteLine(character + " as " + value);
-						Thread.Sleep(25);
-					}
-					else
-					{
-						//Console.WriteLine(@"{0} is not a valid character", error.ToString());
-					}
+					GetValue(character);
 				}
 				);
 			}
@@ -258,6 +195,19 @@ namespace ParallelChallenge
 				Console.WriteLine("The Word must have less than 20 characters");
 			}
 
+		}
+
+		public void GetValue(string character)
+		{
+			if (Words.TryGetValue(character.ToUpper(), out string value))
+			{
+				//Console.WriteLine(character + " as " + value);
+				Thread.Sleep(25);
+			}
+			else
+			{
+				//Console.WriteLine(@"{0} is not a valid character", character.ToString());
+			}
 		}
 	}
 }
