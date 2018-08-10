@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Concurrent;
+using System.Threading;
 
 namespace ParallelChallenge
 {
@@ -39,25 +40,26 @@ namespace ParallelChallenge
 			{ "Y", "Yuri" },
 			{ "Z", "Zyra" }
 			};
-		public void ReturnWord(string word)
+		public void ReturnWordParallelWithConcurrentQueue(string word)
 		{
 			var option = new ParallelOptions{MaxDegreeOfParallelism = 20 };
 			ConcurrentQueue<string> wordSplited = new ConcurrentQueue<string>();
 			word.Select(c => c.ToString()).ToList().ForEach(letter => wordSplited.Enqueue(letter));
-			if (word.Length <= 20)
+			if (word.Length <= int.MaxValue)
 			{
 				Parallel.ForEach(wordSplited, character =>
 				{
-					string value;
-					if (Words.TryGetValue(character.ToUpper(), out value))
+					string error = character;
+					if (Words.TryGetValue(character.ToUpper(), out string value))
 					{
-						Console.WriteLine(character + " as " + value);
+						//Console.WriteLine(character + " as " + value);
+						Thread.Sleep(25);
 					}
 					else
 					{
-						Console.WriteLine(@"{0} is not a valid character", character);
+						//Console.WriteLine(@"{0} is not a valid character", error.ToString());
 					}
-					
+
 				});
 			}
 			else
@@ -65,6 +67,59 @@ namespace ParallelChallenge
 				Console.WriteLine("The Word must have less than 20 characters");
 			}
 			
+		}
+		public void ReturnWordParallelWithList(string word)
+		{
+			var option = new ParallelOptions { MaxDegreeOfParallelism = 20 };
+			List<string> wordSplited = new List<string>(word.Select(c => c.ToString()).ToList());
+			if (word.Length <= int.MaxValue)
+			{
+				Parallel.ForEach(wordSplited, character =>
+				{
+					string error = character;
+					if (Words.TryGetValue(character.ToUpper(), out string value))
+					{
+						//Console.WriteLine(character + " as " + value);
+						Thread.Sleep(25);
+					}
+					else
+					{
+						//Console.WriteLine(@"{0} is not a valid character", error.ToString());
+					}
+
+				});
+			}
+			else
+			{
+				Console.WriteLine("The Word must have less than 20 characters");
+			}
+
+		}
+		public void ReturnWord(string word)
+		{
+
+			List<string> wordSplited = new List<string>(word.Select(c => c.ToString()).ToList());
+			if (word.Length <= int.MaxValue)
+			{
+				foreach (var character in wordSplited)
+				{
+					string error = character;
+					if (Words.TryGetValue(character.ToUpper(), out string value))
+					{
+						//Console.WriteLine(character + " as " + value);
+						Thread.Sleep(25);
+					}
+					else
+					{
+						//Console.WriteLine(@"{0} is not a valid character", error.ToString());
+					}
+				}		
+			}
+			else
+			{
+				Console.WriteLine("The Word must have less than 20 characters");
+			}
+
 		}
 	}
 }
