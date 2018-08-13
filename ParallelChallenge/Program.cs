@@ -17,56 +17,32 @@ namespace ParallelChallenge
 			}
 			catch (Exception e)
 			{
-
-				Console.WriteLine(@"Exception {0}", e.Message);
+				Console.WriteLine(@"Exception: {0}", e.Message);
 			}
-			ParallelImplementation p = new ParallelImplementation();
-			Console.WriteLine("Write Word to be procesed");
+
+			Sequential sequential = new Sequential();
+			ForWithList forWithList = new ForWithList();
+			ForWithConcurrentQueue forWithConcurrentQueue = new ForWithConcurrentQueue();
+			TaskWithList taskWithList = new TaskWithList();
+			TaskWithConcurrentQueue taskWithConcurrentQueue = new TaskWithConcurrentQueue();
+			LinqWithList linqWithList = new LinqWithList();
+			LinqWithConcurrentQueue linqWithConcurrentQueue = new LinqWithConcurrentQueue();
+
+			List < ParallelImplementation > parallels = new List<ParallelImplementation>
+			{
+				sequential, forWithList , forWithConcurrentQueue,taskWithList,
+				taskWithConcurrentQueue,linqWithList,linqWithConcurrentQueue
+			};
+			foreach (var item in parallels)
+			{
+				var watch = System.Diagnostics.Stopwatch.StartNew();
+				item.ReturnWord(word);
+				Console.WriteLine(@"{0} Run", item.GetType().ToString());
+				watch.Stop();
+				Console.WriteLine(watch.ElapsedMilliseconds);
+			}
+			//Console.WriteLine("Write Word to be procesed");
 			//string word = Console.ReadLine();
-			var watch = System.Diagnostics.Stopwatch.StartNew();
-			p.ReturnWord(word);
-			Console.WriteLine("Sequential Run");
-			watch.Stop();
-			Console.WriteLine(watch.ElapsedMilliseconds);
-
-			var watch2 = System.Diagnostics.Stopwatch.StartNew();
-			p.ReturnWordParallelWithConcurrentQueue(word);
-			Console.WriteLine("Parallel For With Concurrent Queue");
-			watch2.Stop();
-			Console.WriteLine(watch2.ElapsedMilliseconds);
-
-			var watch3 = System.Diagnostics.Stopwatch.StartNew();
-			p.ReturnWordParallelWithList(word);
-			Console.WriteLine("Parallel For with List");
-			watch3.Stop();
-			Console.WriteLine(watch3.ElapsedMilliseconds);
-
-			var watch5 = System.Diagnostics.Stopwatch.StartNew();
-			p.ReturnWordWithTaskConcurrentQueue(word);
-			Console.WriteLine("Parallel with ReturnWordWithTaskConcurrentQueue");
-			watch5.Stop();
-			Console.WriteLine(watch5.ElapsedMilliseconds);
-
-			var watch4 = System.Diagnostics.Stopwatch.StartNew();
-			p.ReturnWordWithTask(word);
-			Console.WriteLine("Parallel with ReturnWordWithTask");
-			watch4.Stop();
-			Console.WriteLine(watch4.ElapsedMilliseconds);
-
-			
-
-			var watch6 = System.Diagnostics.Stopwatch.StartNew();
-			p.ReturnWordAsParallel(word);
-			Console.WriteLine("Parallel with As Parallel");
-			watch6.Stop();
-			Console.WriteLine(watch6.ElapsedMilliseconds);
-
-			var watch7 = System.Diagnostics.Stopwatch.StartNew();
-			p.ReturnWordAsParallelConcurrentQueue(word);
-			Console.WriteLine("Parallel with As Parallel Concurrent Queue");
-			watch7.Stop();
-			Console.WriteLine(watch7.ElapsedMilliseconds);
-
 		}
 	}
 }
