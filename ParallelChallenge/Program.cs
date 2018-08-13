@@ -13,7 +13,7 @@ namespace ParallelChallenge
 			string word = String.Empty;
 			try
 			{
-				word = System.IO.File.ReadAllText(@"C:\Users\msogamoso\Documents\big.txt");
+				word = System.IO.File.ReadAllText(@"C:\Users\msogamoso\Documents\big2.txt");
 			}
 			catch (Exception e)
 			{
@@ -41,17 +41,19 @@ namespace ParallelChallenge
 			watch3.Stop();
 			Console.WriteLine(watch3.ElapsedMilliseconds);
 
+			var watch5 = System.Diagnostics.Stopwatch.StartNew();
+			p.ReturnWordWithTaskConcurrentQueue(word);
+			Console.WriteLine("Parallel with ReturnWordWithTaskConcurrentQueue");
+			watch5.Stop();
+			Console.WriteLine(watch5.ElapsedMilliseconds);
+
 			var watch4 = System.Diagnostics.Stopwatch.StartNew();
 			p.ReturnWordWithTask(word);
 			Console.WriteLine("Parallel with ReturnWordWithTask");
 			watch4.Stop();
 			Console.WriteLine(watch4.ElapsedMilliseconds);
 
-			var watch5 = System.Diagnostics.Stopwatch.StartNew();
-			p.ReturnWordWithTaskConcurrentQueue(word);
-			Console.WriteLine("Parallel with ReturnWordWithTaskConcurrentQueue");
-			watch5.Stop();
-			Console.WriteLine(watch5.ElapsedMilliseconds);
+			
 
 			var watch6 = System.Diagnostics.Stopwatch.StartNew();
 			p.ReturnWordAsParallel(word);

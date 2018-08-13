@@ -99,31 +99,50 @@ namespace ParallelChallenge
 			List<string> wordSplited = new List<string>(word.Select(c => c.ToString()).ToList());
 			Task[] tasks = new Task[count];
 			var e = wordSplited.GetEnumerator();
-			if (word.Length <= int.MaxValue)
+			try
 			{
-				for (int i = 0; i < count; i++)
+				if (word.Length <= int.MaxValue)
 				{
-					tasks[i] = new Task(() =>
+					for (int i = 0; i < count; i++)
 					{
-						while (e.MoveNext())
+						tasks[i] = new Task(() =>
 						{
-							string character = e.Current;
-							GetValue(character);
-						}
-					});
+							while (e.MoveNext())
+							{
+								string character = e.Current;
+								GetValue(character);
+							}
+						});
+					}
+					foreach (var task in tasks)
+					{
+						task.Start();
+
+					}
+
+					Task.WaitAll(tasks);
+
 				}
-				foreach (var task in tasks)
+				else
 				{
-					task.Start();
-
+					Console.WriteLine("The Word must have less than 20 characters");
 				}
-
-				Task.WaitAll(tasks);
 			}
-			else
+			catch (AggregateException ex)
 			{
-				Console.WriteLine("The Word must have less than 20 characters");
+
+				Console.WriteLine("ReturnWordWithTaskConcurrentQueue :" + ex.Message);
+				foreach (var e1 in ex.InnerExceptions)
+				{
+					// Handle the custom exception.
+					Console.WriteLine("ReturnWordWithTaskConcurrentQueue :" + e1.Message);
+				}
 			}
+			catch (Exception ex)
+			{
+				Console.WriteLine("ReturnWordWithTaskConcurrentQueue :" + ex.Message);
+			}
+
 
 		}
 		public void ReturnWordWithTaskConcurrentQueue(string word)
@@ -133,31 +152,53 @@ namespace ParallelChallenge
 			word.Select(c => c.ToString()).ToList().ForEach(letter => wordSplited.Enqueue(letter));
 			Task[] tasks = new Task[count];
 			var e = wordSplited.GetEnumerator();
-			if (word.Length <= int.MaxValue)
+			try
 			{
-				for (int i = 0; i < count; i++)
+				if (word.Length <= int.MaxValue)
 				{
-					tasks[i] = new Task(() =>
+					for (int i = 0; i < count; i++)
 					{
-						while (wordSplited.Count() > 0)
+						tasks[i] = new Task(() =>
 						{
-							wordSplited.TryDequeue(out string character);
-							GetValue(character);
-						}
-					});
+							while (wordSplited.Count() > 0)
+							{
+								wordSplited.TryDequeue(out string character);
+								if (character != null)
+								{
+									GetValue(character);
+								}
+							}
+						});
+					}
+					foreach (var task in tasks)
+					{
+						task.Start();
+
+					}
+
+					Task.WaitAll(tasks);
+
+
 				}
-				foreach (var task in tasks)
+				else
 				{
-					task.Start();
-
+					Console.WriteLine("The Word must have less than 20 characters");
 				}
-
-				Task.WaitAll(tasks);
 			}
-			else
+			catch (AggregateException ex)
 			{
-				Console.WriteLine("The Word must have less than 20 characters");
+
+				Console.WriteLine("ReturnWordWithTaskConcurrentQueue :" + ex.Message);
+				foreach (var e1 in ex.InnerExceptions)
+				{
+					Console.WriteLine("ReturnWordWithTaskConcurrentQueue :" + e1.Message);
+				}
 			}
+			catch (Exception ex)
+			{
+				Console.WriteLine("ReturnWordWithTaskConcurrentQueue :" + ex.Message);
+			}
+			
 
 		}
 		public void ReturnWordAsParallel(string word)
@@ -202,12 +243,13 @@ namespace ParallelChallenge
 			if (Words.TryGetValue(character.ToUpper(), out string value))
 			{
 				//Console.WriteLine(character + " as " + value);
-				Thread.Sleep(25);
+				//Thread.Sleep(1);
 			}
 			else
 			{
-				//Console.WriteLine(@"{0} is not a valid character", character.ToString());
+				//Console.WriteLine(@"{0} is not a valid character", character);
 			}
+			
 		}
 	}
 }
