@@ -9,6 +9,10 @@ namespace ParallelChallenge
 {
 	class TaskWithConcurrentQueue : ParallelImplementation
 	{
+		public TaskWithConcurrentQueue(IMessaging messaging) : base(messaging)
+		{
+		}
+
 		public override void ReturnWord(string word)
 		{
 			var count = 20;
@@ -26,8 +30,7 @@ namespace ParallelChallenge
 						{
 							while (wordSplited.Count() > 0)
 							{
-								wordSplited.TryDequeue(out string character);
-								if (character != null)
+								if (wordSplited.TryDequeue(out string character))
 								{
 									GetValue(character);
 								}
@@ -43,21 +46,21 @@ namespace ParallelChallenge
 				}
 				else
 				{
-					Console.WriteLine("The Word must have less than 20 characters");
+					_messaging.InvalidWord();
 				}
 			}
 			catch (AggregateException ex)
 			{
 
-				Console.WriteLine("ReturnWordWithTaskConcurrentQueue :" + ex.Message);
+				_messaging.Exception(ex);
 				foreach (var e1 in ex.InnerExceptions)
 				{
-					Console.WriteLine("ReturnWordWithTaskConcurrentQueue :" + e1.Message);
+					_messaging.Exception(e1);
 				}
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine("ReturnWordWithTaskConcurrentQueue :" + ex.Message);
+				_messaging.Exception(ex);
 			}
 
 

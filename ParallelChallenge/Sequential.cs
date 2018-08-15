@@ -8,6 +8,10 @@ namespace ParallelChallenge
 {
 	public class Sequential : ParallelImplementation
 	{
+		public Sequential(IMessaging messaging) : base(messaging)
+		{
+		}
+
 		public override void ReturnWord(string word)
 		{
 			List<string> wordSplited = new List<string>(word.Select(c => c.ToString()).ToList());
@@ -20,7 +24,7 @@ namespace ParallelChallenge
 			}
 			else
 			{
-				Console.WriteLine("The Word must have less than 20 characters");
+				_messaging.InvalidWord();
 			}
 
 		}

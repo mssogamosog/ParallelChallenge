@@ -19,25 +19,23 @@ namespace ParallelChallenge
 			{
 				Console.WriteLine(@"Exception: {0}", e.Message);
 			}
-
-			Sequential sequential = new Sequential();
-			ForWithList forWithList = new ForWithList();
-			ForWithConcurrentQueue forWithConcurrentQueue = new ForWithConcurrentQueue();
-			TaskWithList taskWithList = new TaskWithList();
-			TaskWithConcurrentQueue taskWithConcurrentQueue = new TaskWithConcurrentQueue();
-			LinqWithList linqWithList = new LinqWithList();
-			LinqWithConcurrentQueue linqWithConcurrentQueue = new LinqWithConcurrentQueue();
+			IMessaging messaging = new Messaging();
 
 			List < ParallelImplementation > parallels = new List<ParallelImplementation>
 			{
-				sequential, forWithList , forWithConcurrentQueue,taskWithList,
-				taskWithConcurrentQueue,linqWithList,linqWithConcurrentQueue
+				new LinqWithConcurrentQueue(messaging),
+				new LinqWithList(messaging),
+				new TaskWithConcurrentQueue(messaging),
+				new TaskWithList(messaging),
+				new ForWithConcurrentQueue(messaging),
+				new ForWithList(messaging),
+				new Sequential(messaging)
 			};
 			foreach (var item in parallels)
 			{
 				var watch = System.Diagnostics.Stopwatch.StartNew();
 				item.ReturnWord(word);
-				Console.WriteLine(@"{0} Run", item.GetType().ToString());
+				Console.WriteLine(@"{0} Run", item.ToString());
 				watch.Stop();
 				Console.WriteLine(watch.ElapsedMilliseconds);
 			}

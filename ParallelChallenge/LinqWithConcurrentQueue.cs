@@ -9,6 +9,10 @@ namespace ParallelChallenge
 {
 	class LinqWithConcurrentQueue : ParallelImplementation
 	{
+		public LinqWithConcurrentQueue(IMessaging messaging) : base(messaging)
+		{
+		}
+
 		public override void ReturnWord(string word)
 		{
 			ConcurrentQueue<string> wordSplited = new ConcurrentQueue<string>();
@@ -24,7 +28,7 @@ namespace ParallelChallenge
 			}
 			else
 			{
-				Console.WriteLine("The Word must have less than 20 characters");
+				_messaging.InvalidWord();
 			}
 
 		}

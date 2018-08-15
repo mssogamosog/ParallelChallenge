@@ -42,14 +42,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
     <Compile Include="ForWithConcurrentQueue.cs" />
+    <Compile Include="IMessaging.cs" />
+    <Compile Include="ICustomTaskManager.cs" />
     <Compile Include="LinqWithConcurrentQueue.cs" />
     <Compile Include="LinqWithList.cs" />
     <Compile Include="ForWithList.cs" />
+    <Compile Include="Messaging.cs" />
     <Compile Include="ParallelImplementation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sequential.cs" />
+    <Compile Include="CustomTaskManager.cs" />
     <Compile Include="TaskWithConcurrentQueue.cs" />
     <Compile Include="TaskWithList.cs" />
   </ItemGroup>

@@ -9,6 +9,10 @@ namespace ParallelChallenge
 {
 	class ForWithConcurrentQueue : ParallelImplementation
 	{
+		public ForWithConcurrentQueue(IMessaging messaging) : base(messaging)
+		{
+		}
+
 		public override void ReturnWord(string word)
 		{
 			var option = new ParallelOptions { MaxDegreeOfParallelism = 20 };
@@ -23,7 +27,7 @@ namespace ParallelChallenge
 			}
 			else
 			{
-				Console.WriteLine("The Word must have less than 20 characters");
+				_messaging.InvalidWord();
 			}
 
 		}
