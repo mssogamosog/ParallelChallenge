@@ -8,8 +8,11 @@ namespace ParallelChallenge
 {
 	class TaskWithList : ParallelImplementation
 	{
-		public TaskWithList(IMessaging messaging) : base(messaging)
+		public ICustomTaskManager _customManager;
+
+		public TaskWithList(IMessaging messaging, IGetValue getValue, ICustomTaskManager customManager) : base(messaging, getValue)
 		{
+			_customManager = customManager;
 		}
 
 		public override void ReturnWord(string word)
@@ -22,26 +25,7 @@ namespace ParallelChallenge
 			{
 				if (word.Length <= int.MaxValue)
 				{
-					for (int i = 0; i < count; i++)
-					{
-						tasks[i] = new Task(() =>
-						{
-							while (e.MoveNext())
-							{
-								if(e.Current is string)
-								{
-									GetValue(e.Current);
-								}
-							}
-						});
-					}
-					foreach (var task in tasks)
-					{
-						task.Start();
-					}
-
-					Task.WaitAll(tasks);
-
+					_customManager.RunTask(wordSplited);
 				}
 				else
 				{

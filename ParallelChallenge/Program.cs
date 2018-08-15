@@ -25,6 +25,8 @@ namespace ParallelChallenge
 			using (var scope = container.BeginLifetimeScope())
 			{
 				var messaging = scope.Resolve<IMessaging>();
+				var getValue = scope.Resolve<IGetValue>();
+				var customTaslManager = scope.Resolve<ICustomTaskManager>();
 				var forWithConcurrency = scope.Resolve<ForWithConcurrentQueue>();
 				var forWithList = scope.Resolve<ForWithList>();
 				var linqWithList = scope.Resolve<LinqWithList>();
@@ -32,8 +34,7 @@ namespace ParallelChallenge
 				var taskWithConcurrency = scope.Resolve<TaskWithConcurrentQueue>();
 				var taskWithList = scope.Resolve<TaskWithList>();
 				var sequential = scope.Resolve<Sequential>();
-
-			List<ParallelImplementation> parallels = new List<ParallelImplementation>
+			List<IParallelImplementation> parallels = new List<IParallelImplementation>
 			{
 				sequential,
 				forWithConcurrency,
@@ -62,6 +63,8 @@ namespace ParallelChallenge
 			var builder = new ContainerBuilder();
 
 			builder.RegisterType<ParallelImplementation>().As<IParallelImplementation>();
+			builder.RegisterType<CustomTaskManager>().As<ICustomTaskManager>();
+			builder.RegisterType<GetValue>().As<IGetValue>();
 			builder.RegisterType<Messaging>().As<IMessaging>();
 			builder.RegisterType<ForWithConcurrentQueue>();
 			builder.RegisterType<LinqWithConcurrentQueue>();

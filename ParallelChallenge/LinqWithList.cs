@@ -8,7 +8,7 @@ namespace ParallelChallenge
 {
 	class LinqWithList : ParallelImplementation
 	{
-		public LinqWithList(IMessaging messaging) : base(messaging)
+		public LinqWithList(IMessaging messaging, IGetValue getValue) : base(messaging, getValue)
 		{
 		}
 
@@ -19,7 +19,7 @@ namespace ParallelChallenge
 			{
 				wordSplited.AsParallel().WithDegreeOfParallelism(20).ForAll((character) =>
 				{
-					GetValue(character);
+					_getValue.Get(character);
 				}
 				);
 			}

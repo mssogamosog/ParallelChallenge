@@ -6,26 +6,14 @@ namespace ParallelChallenge
 	{
 		public IMessaging _messaging;
 
-		public ParallelImplementation(IMessaging messaging)
+		public IGetValue _getValue;
+
+		protected ParallelImplementation(IMessaging messaging, IGetValue getValue)
 		{
 			_messaging = messaging;
+			_getValue = getValue;
 		}
 
-		
-
-		public void GetValue(string character)
-		{
-			if (Constants.Words.TryGetValue(character.ToUpper(), out string value))
-			{
-				_messaging.ShowResult(character,value);
-				//Thread.Sleep(1);
-			}
-			else
-			{
-				_messaging.CharacterNotValid(character);
-			}
-			
-		}
 		public abstract void ReturnWord(string word);		
 	}
 }

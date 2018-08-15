@@ -9,7 +9,7 @@ namespace ParallelChallenge
 {
 	class LinqWithConcurrentQueue : ParallelImplementation
 	{
-		public LinqWithConcurrentQueue(IMessaging messaging) : base(messaging)
+		public LinqWithConcurrentQueue(IMessaging messaging, IGetValue getValue) : base(messaging, getValue)
 		{
 		}
 
@@ -22,7 +22,7 @@ namespace ParallelChallenge
 				wordSplited.AsParallel().WithDegreeOfParallelism(20).ForAll((character) =>
 				{
 					wordSplited.TryDequeue(out character);
-					GetValue(character);
+					_getValue.Get(character);
 				}
 				);
 			}

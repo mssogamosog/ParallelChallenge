@@ -47,6 +47,8 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="ForWithConcurrentQueue.cs" />
+    <Compile Include="GetValue.cs" />
+    <Compile Include="IGetValue.cs" />
     <Compile Include="IMessaging.cs" />
     <Compile Include="ICustomTaskManager.cs" />
     <Compile Include="IParallelImplementation.cs" />

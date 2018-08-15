@@ -9,7 +9,7 @@ namespace ParallelChallenge
 {
 	class TaskWithConcurrentQueue : ParallelImplementation
 	{
-		public TaskWithConcurrentQueue(IMessaging messaging) : base(messaging)
+		public TaskWithConcurrentQueue(IMessaging messaging, IGetValue getValue) : base(messaging, getValue)
 		{
 		}
 
@@ -32,7 +32,7 @@ namespace ParallelChallenge
 							{
 								if (wordSplited.TryDequeue(out string character))
 								{
-									GetValue(character);
+									_getValue.Get(character);
 								}
 							}
 						});

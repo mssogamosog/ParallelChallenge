@@ -9,7 +9,7 @@ namespace ParallelChallenge
 {
 	class ForWithConcurrentQueue : ParallelImplementation
 	{
-		public ForWithConcurrentQueue(IMessaging messaging) : base(messaging)
+		public ForWithConcurrentQueue(IMessaging messaging, IGetValue getValue) : base(messaging, getValue)
 		{
 		}
 
@@ -22,7 +22,7 @@ namespace ParallelChallenge
 			{
 				Parallel.ForEach(wordSplited, character =>
 				{
-					GetValue(character);
+					_getValue.Get(character);
 				});
 			}
 			else

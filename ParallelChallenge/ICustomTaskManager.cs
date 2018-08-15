@@ -1,9 +1,10 @@
 ﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
 
 namespace ParallelChallenge
 {
 	public interface ICustomTaskManager
 	{
-		void RunTask(string word, ConcurrentQueue<string> wordSplited);
+		void RunTask( List<string> wordSplited);
 	}
 }

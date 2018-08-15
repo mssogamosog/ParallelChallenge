@@ -8,7 +8,7 @@ namespace ParallelChallenge
 {
 	public class Sequential : ParallelImplementation
 	{
-		public Sequential(IMessaging messaging) : base(messaging)
+		public Sequential(IMessaging messaging, IGetValue getValue) : base(messaging, getValue)
 		{
 		}
 
@@ -19,7 +19,7 @@ namespace ParallelChallenge
 			{
 				foreach (var character in wordSplited)
 				{
-					GetValue(character);
+					_getValue.Get(character);
 				}
 			}
 			else

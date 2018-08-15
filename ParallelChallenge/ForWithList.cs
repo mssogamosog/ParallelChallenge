@@ -8,7 +8,7 @@ namespace ParallelChallenge
 {
 	class ForWithList: ParallelImplementation
 	{
-		public ForWithList(IMessaging messaging) : base(messaging)
+		public ForWithList(IMessaging messaging, IGetValue getValue) : base(messaging, getValue)
 		{
 		}
 
@@ -20,7 +20,7 @@ namespace ParallelChallenge
 			{
 				Parallel.ForEach(wordSplited, character =>
 				{
-					GetValue(character);
+					_getValue.Get(character);
 				});
 			}
 			else
