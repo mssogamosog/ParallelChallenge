@@ -2,11 +2,9 @@
 
 namespace ParallelChallenge
 {
-	public abstract class ParallelImplementation 
+	public abstract class ParallelImplementation : IParallelImplementation
 	{
-		protected IMessaging _messaging;
-
-		protected ICustomTaskManager customTaskManager;
+		public IMessaging _messaging;
 
 		public ParallelImplementation(IMessaging messaging)
 		{
@@ -15,16 +13,16 @@ namespace ParallelChallenge
 
 		
 
-		protected void GetValue(string character)
+		public void GetValue(string character)
 		{
 			if (Constants.Words.TryGetValue(character.ToUpper(), out string value))
 			{
-				//_messaging.ShowResult(character,value);
+				_messaging.ShowResult(character,value);
 				//Thread.Sleep(1);
 			}
 			else
 			{
-				//_messaging.CharacterNotValid(character);
+				_messaging.CharacterNotValid(character);
 			}
 			
 		}

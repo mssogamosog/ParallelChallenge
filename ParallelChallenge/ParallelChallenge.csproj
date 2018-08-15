@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.8.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.8.1\lib\net45\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,6 +49,7 @@
     <Compile Include="ForWithConcurrentQueue.cs" />
     <Compile Include="IMessaging.cs" />
     <Compile Include="ICustomTaskManager.cs" />
+    <Compile Include="IParallelImplementation.cs" />
     <Compile Include="LinqWithConcurrentQueue.cs" />
     <Compile Include="LinqWithList.cs" />
     <Compile Include="ForWithList.cs" />
@@ -60,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
